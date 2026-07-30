@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ferramentas da Qualidade Aplicadas ao GRIS no TRC | GRIS.EXPERT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --petroleo-950:#081b2c;
+    --petroleo-900:#0D2B45;
+    --petroleo-800:#123754;
+    --petroleo-700:#1a4a6e;
+    --dourado:#C9A84C;
+    --dourado-soft:#e6cf8f;
+    --off-white:#f4f2ec;
+    --linha:rgba(201,168,76,0.25);
+    --texto-claro:#d9e2ea;
+    --texto-muted:#9fb0be;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--petroleo-950);
+    color:var(--off-white);
+    font-family:'Source Sans 3',sans-serif;
+    line-height:1.6;
+    font-size:16px;
+  }
+  h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:600;letter-spacing:.2px;}
+  a{color:var(--dourado-soft);}
+  .wrap{max-width:980px;margin:0 auto;padding:0 28px;}
+
+  /* NAV */
+  header.top{
+    position:sticky;top:0;z-index:50;
+    background:rgba(8,27,44,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--linha);
+  }
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;max-width:980px;margin:0 auto;}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;letter-spacing:.4px;color:var(--off-white);text-decoration:none;}
+  .brand .mark{width:30px;height:30px;border:1.5px solid var(--dourado);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--dourado);}
+  .topbar nav a{font-size:.85rem;color:var(--texto-muted);text-decoration:none;margin-left:22px;}
+  .topbar nav a:hover{color:var(--dourado-soft);}
+
+  /* HERO */
+  .hero{padding:72px 0 48px;border-bottom:1px solid var(--linha);}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--dourado);margin-bottom:18px;}
+  .hero h1{font-size:2.5rem;line-height:1.12;color:var(--off-white);max-width:820px;}
+  .hero h1 em{font-style:normal;color:var(--dourado-soft);}
+  .hero p.lede{margin-top:20px;max-width:640px;color:var(--texto-claro);font-size:1.05rem;}
+  .hero-meta{display:flex;gap:28px;margin-top:32px;flex-wrap:wrap;}
+  .hero-meta div{border-left:2px solid var(--dourado);padding-left:12px;}
+  .hero-meta .num{font-family:'JetBrains Mono',monospace;color:var(--dourado-soft);font-size:1.15rem;display:block;}
+  .hero-meta .lbl{font-size:.78rem;color:var(--texto-muted);}
+
+  /* SECTION TITLES */
+  .section-title{padding:56px 0 20px;}
+  .section-title .eyebrow{margin-bottom:10px;}
+  .section-title h2{font-size:1.7rem;color:var(--off-white);}
+  .section-title p{color:var(--texto-muted);max-width:640px;margin-top:10px;font-size:.95rem;}
+
+  /* SYLLABUS GRID */
+  .syllabus{display:grid;grid-template-columns:1fr;gap:1px;background:var(--linha);border:1px solid var(--linha);margin-bottom:56px;}
+  .tool-row{background:var(--petroleo-950);display:grid;grid-template-columns:56px 1fr auto;align-items:center;gap:18px;padding:16px 20px;transition:background .15s;}
+  .tool-row.active{background:var(--petroleo-900);}
+  .tool-row:hover{background:var(--petroleo-800);}
+  .tool-num{font-family:'JetBrains Mono',monospace;color:var(--dourado);font-size:.85rem;}
+  .tool-name{font-weight:600;color:var(--off-white);font-size:.98rem;}
+  .tool-name span.sub{display:block;font-weight:400;color:var(--texto-muted);font-size:.82rem;margin-top:2px;font-family:'Source Sans 3',sans-serif;}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:2px;white-space:nowrap;}
+  .tag.live{background:rgba(201,168,76,0.16);color:var(--dourado-soft);border:1px solid var(--dourado);}
+  .tag.soon{background:rgba(159,176,190,0.08);color:var(--texto-muted);border:1px solid rgba(159,176,190,0.25);}
+
+  /* MODULE 1 CONTENT */
+  .module{border-top:2px solid var(--dourado);padding-top:44px;margin-top:20px;}
+  .module-head{margin-bottom:44px;}
+  .module-head .eyebrow{color:var(--dourado);}
+  .module-head h2{font-size:2.1rem;margin-top:8px;}
+  .module-head p{color:var(--texto-claro);max-width:680px;margin-top:14px;}
+
+  .chapter{margin-bottom:52px;padding-bottom:8px;}
+  .chapter-num{font-family:'JetBrains Mono',monospace;color:var(--dourado);font-size:.8rem;letter-spacing:1.5px;}
+  .chapter h3{font-size:1.4rem;margin-top:6px;margin-bottom:16px;color:var(--off-white);}
+  .chapter p{color:var(--texto-claro);margin-bottom:12px;}
+  .chapter ul, .chapter ol{margin:12px 0 12px 22px;color:var(--texto-claro);}
+  .chapter li{margin-bottom:6px;}
+  .chapter strong{color:var(--off-white);}
+
+  .callout{
+    border-left:3px solid var(--dourado);
+    background:rgba(201,168,76,0.06);
+    padding:16px 20px;
+    margin:20px 0;
+    font-size:.95rem;
+    color:var(--texto-claro);
+  }
+  .callout .label{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--dourado);display:block;margin-bottom:6px;}
+
+  table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.9rem;}
+  th,td{border:1px solid var(--linha);padding:10px 12px;text-align:left;color:var(--texto-claro);}
+  th{background:var(--petroleo-800);color:var(--dourado-soft);font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.8px;text-transform:uppercase;font-weight:500;}
+  tr:nth-child(even) td{background:rgba(255,255,255,0.015);}
+
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:18px 0;}
+  .kpi-card{border:1px solid var(--linha);padding:16px;background:var(--petroleo-900);}
+  .kpi-card .kpi-name{font-weight:600;color:var(--off-white);font-size:.9rem;margin-bottom:6px;}
+  .kpi-card .kpi-desc{color:var(--texto-muted);font-size:.82rem;}
+
+  .checklist{list-style:none;margin:16px 0;}
+  .checklist li{display:flex;gap:10px;align-items:flex-start;margin-bottom:9px;color:var(--texto-claro);font-size:.92rem;}
+  .checklist li::before{content:"";flex-shrink:0;width:14px;height:14px;margin-top:3px;border:1.5px solid var(--dourado);}
+
+  .case-box{border:1px solid var(--linha);padding:24px;margin:20px 0;background:var(--petroleo-900);}
+  .case-box h4{color:var(--dourado-soft);font-size:1rem;margin-bottom:8px;font-family:'JetBrains Mono',monospace;letter-spacing:.5px;text-transform:uppercase;}
+
+  .before-after{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--linha);border:1px solid var(--linha);margin:18px 0;}
+  .before-after > div{background:var(--petroleo-950);padding:18px;}
+  .before-after .ba-label{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;}
+  .before-after .before .ba-label{color:#c98b6a;}
+  .before-after .after .ba-label{color:var(--dourado-soft);}
+  .before-after .stat{font-family:'JetBrains Mono',monospace;font-size:1.4rem;color:var(--off-white);}
+  .before-after .stat-lbl{font-size:.78rem;color:var(--texto-muted);}
+
+  .step{display:grid;grid-template-columns:44px 1fr;gap:16px;margin-bottom:20px;}
+  .step .step-num{font-family:'Fraunces',serif;font-size:1.6rem;color:var(--dourado);opacity:.6;}
+  .step h4{font-size:1rem;color:var(--off-white);margin-bottom:4px;}
+  .step p{color:var(--texto-claro);font-size:.92rem;margin:0;}
+
+  .integration-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:16px 0;}
+  .integration-grid .icard{border:1px solid var(--linha);padding:14px;}
+  .integration-grid .icard .norm{font-family:'JetBrains Mono',monospace;color:var(--dourado-soft);font-size:.82rem;margin-bottom:6px;display:block;}
+  .integration-grid .icard p{font-size:.85rem;color:var(--texto-muted);margin:0;}
+
+  .reflexao{
+    margin-top:20px;padding:26px 28px;
+    border:1px solid var(--dourado);
+    background:linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.02));
+  }
+  .reflexao p{color:var(--off-white);font-size:1.02rem;font-style:italic;font-family:'Fraunces',serif;font-weight:500;line-height:1.5;}
+  .reflexao p:last-child{margin-bottom:0;}
+
+  /* QUIZ */
+  #quiz-form{margin-top:24px;}
+  .quiz-q{border:1px solid var(--linha);padding:18px 20px;margin-bottom:14px;background:var(--petroleo-900);}
+  .quiz-q.correct{border-color:var(--dourado);}
+  .quiz-q.incorrect{border-color:#c9694c;}
+  .quiz-enunciado{color:var(--off-white);margin-bottom:12px;font-size:.95rem;}
+  .quiz-opt{display:block;color:var(--texto-claro);font-size:.9rem;padding:7px 4px;cursor:pointer;border-radius:2px;}
+  .quiz-opt:hover{color:var(--dourado-soft);}
+  .quiz-opt input{margin-right:8px;accent-color:var(--dourado);}
+  .quiz-opt.is-correct{color:var(--dourado-soft);font-weight:600;}
+  .quiz-opt.is-wrong-pick{color:#e08a6f;text-decoration:line-through;}
+  .quiz-feedback{margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:1px;text-transform:uppercase;}
+  .quiz-feedback.ok{color:var(--dourado-soft);}
+  .quiz-feedback.no{color:#e08a6f;}
+  .quiz-btn{
+    font-family:'JetBrains Mono',monospace;font-size:.82rem;letter-spacing:1px;text-transform:uppercase;
+    background:var(--dourado);color:var(--petroleo-950);border:none;padding:13px 28px;cursor:pointer;margin-top:8px;
+  }
+  .quiz-btn:hover{background:var(--dourado-soft);}
+  .quiz-result{margin-top:26px;padding:22px 26px;border:1px solid var(--dourado);background:rgba(201,168,76,0.06);}
+  .quiz-score-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--dourado);margin-bottom:8px;}
+  .quiz-score{font-family:'Fraunces',serif;font-size:1.5rem;color:var(--off-white);}
+
+  .divider{height:1px;background:var(--linha);margin:56px 0;}
+
+  footer{border-top:1px solid var(--linha);padding:36px 0 60px;margin-top:60px;}
+  footer p{color:var(--texto-muted);font-size:.82rem;}
+  footer a{color:var(--dourado-soft);text-decoration:none;}
+
+  .nav-pill{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--texto-muted);text-decoration:none;border:1px solid var(--linha);padding:8px 14px;margin-top:10px;}
+  .nav-pill:hover{border-color:var(--dourado);color:var(--dourado-soft);}
+
+  @media (max-width:640px){
+    .hero h1{font-size:1.9rem;}
+    .before-after{grid-template-columns:1fr;}
+    .tool-row{grid-template-columns:36px 1fr;}
+    .tool-row .tag{grid-column:2/3;margin-top:6px;justify-self:start;}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="topbar">
+    <a href="../index.html" class="brand"><span class="mark">GR</span> GRIS.EXPERT</a>
+    <nav>
+      <a href="../cursos.html">Catálogo</a>
+      <a href="#trilha">Trilha</a>
+      <a href="#modulo-1">Módulo 1</a>
+      <a href="#modulo-2">Módulo 2</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">GRIS.EXPERT — Curso Técnico</div>
+    <h1>Ferramentas da Qualidade Aplicadas ao <em>Gerenciamento de Riscos</em> no Transporte Rodoviário de Cargas</h1>
+    <p class="lede">Um manual técnico-prático que traduz o instrumental clássico da Engenharia da Qualidade — de Deming a Ishikawa — para a rotina de quem investiga sinistro, audita transportadora, subscreve apólice ou estrutura um PGR. Gestão de risco deixa de ser reativa e passa a ser processo.</p>
+    <div class="hero-meta">
+      <div><span class="num">20</span><span class="lbl">Ferramentas / módulos</span></div>
+      <div><span class="num">12</span><span class="lbl">Blocos por módulo</span></div>
+      <div><span class="num">02</span><span class="lbl">Módulos publicados</span></div>
+      <div><span class="num">TRC</span><span class="lbl">Foco setorial</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <div class="section-title" id="trilha">
+    <div class="eyebrow">Trilha do curso</div>
+    <h2>20 ferramentas, uma lógica única</h2>
+    <p>Cada módulo segue a mesma estrutura de 12 blocos: fundamentos, aplicação em GRIS, aplicação em seguro de transportes, estudo de caso, passo a passo, erros frequentes, integração normativa, indicadores, checklists, modelos, benefícios e reflexão estratégica. O Módulo 1 está publicado abaixo; os demais seguem o mesmo padrão, em desenvolvimento.</p>
+  </div>
+
+  <div class="syllabus">
+    <div class="tool-row active">
+      <div class="tool-num">01</div>
+      <div class="tool-name">PDCA <span class="sub">Ciclo de melhoria contínua — a espinha dorsal do curso</span></div>
+      <div class="tag live">Publicado</div>
+    </div>
+    <div class="tool-row active"><div class="tool-num">02</div><div class="tool-name">Diagrama de Ishikawa <span class="sub">Causa e efeito em investigação de sinistros</span></div><div class="tag live">Publicado</div></div>
+    <div class="tool-row"><div class="tool-num">03</div><div class="tool-name">Diagrama de Pareto <span class="sub">Priorização de rotas e causas críticas</span></div><div class="tag soon">Em breve</div></div>
+    <div class="tool-row"><div class="tool-num">04</div><div class="tool-name">FMEA <span class="sub">Análise de modos de falha e efeitos em operações de carga</span></div><div class="tag soon">Em breve</div></div>
+    <div class="tool-row"><div class="tool-num">05</div><div class="tool-name">Fluxograma <span class="sub">Mapeamento de processos de escolta e rastreamento</span></div><div class="tag soon">Em breve</div></div>
+    <div class="tool-row"><div class="tool-num">06</div><div class="tool-name">5W2H <span class="sub">Estruturação de planos de ação em PGR</span></div><div class="tag soon">Em breve</div></div>
+    <div class="tool-row"><div class="tool-num">07</div><div class="tool-name">Matriz GUT <span class="sub">Priorização por Gravidade, Urgência e Tendência</span></div><div class="tag soon">Em breve</div></div>
+    <div class="tool-row"><div class="tool-num">08</div><div class="tool-name">CEP — Controle Estatístico do Processo <span class="sub">Variabilidade em indicadores de sinistralidade</span></div><div class="tag soon">Em breve</div></div>
+    <div class="tool-row"><div class="tool-num">09</div><div class="tool-name">Folha de Verificação <span class="sub">Coleta padronizada em auditoria de campo</span></div><div class="tag soon">Em breve</div></div>
+    <div class="tool-row"><div class="tool-num">10</div><div class="tool-name">Histograma <span class="sub">Distribuição de frequência de ocorrências</span></div><div class="tag soon">Em breve</div></div>
+    <div class="tool-row"><div class="tool-num">11</div><div class="tool-name">Diagrama de Dispersão <span class="sub">Correlação entre variáveis de risco</span></div><div class="tag soon">Em breve</div></div>
+    <div class="tool-row"><div class="tool-num">12</div><div class="tool-name">Cartas de Controle <span class="sub">Monitoramento contínuo de KPIs de segurança</span></div><div class="tag soon">Em breve</div></div>
+    <div class="tool-row"><div class="tool-num">13</div><div class="tool-name">Brainstorming <span class="sub">Geração estruturada de hipóteses em comitês de risco</span></div><div class="tag soon">Em breve</div></div>
+    <div class="tool-row"><div class="tool-num">14</div><div class="tool-name">Benchmarking <span class="sub">Comparação setorial de práticas de GRIS</span></div><div class="tag soon">Em breve</div></div>
+    <div class="tool-row"><div class="tool-num">15</div><div class="tool-name">MASP <span class="sub">Metodologia de Análise e Solução de Problemas aplicada a sinistros recorrentes</span></div><div class="tag soon">Em breve</div></div>
+    <div class="tool-row"><div class="tool-num">16</div><div class="tool-name">Análise SWOT <span class="sub">Diagnóstico estratégico de área de GRIS</span></div><div class="tag soon">Em breve</div></div>
+    <div class="tool-row"><div class="tool-num">17</div><div class="tool-name">SIPOC <span class="sub">Mapeamento de fornecedores, entradas e saídas do processo logístico</span></div><div class="tag soon">Em breve</div></div>
+    <div class="tool-row"><div class="tool-num">18</div><div class="tool-name">Matriz de Riscos <span class="sub">Probabilidade x impacto em rotas e operações</span></div><div class="tag soon">Em breve</div></div>
+    <div class="tool-row"><div class="tool-num">19</div><div class="tool-name">Bow-Tie Analysis <span class="sub">Barreiras de prevenção e mitigação lado a lado</span></div><div class="tag soon">Em breve</div></div>
+    <div class="tool-row"><div class="tool-num">20</div><div class="tool-name">5 Porquês &amp; Diagrama de Afinidades <span class="sub">Causa-raiz e organização qualitativa de dados de campo</span></div><div class="tag soon">Em breve</div></div>
+  </div>
+
+  <!-- ======================= MÓDULO 1 — PDCA ======================= -->
+  <div class="module" id="modulo-1">
+    <div class="module-head">
+      <div class="eyebrow">Módulo 01 / 20</div>
+      <h2>PDCA — Plan, Do, Check, Act</h2>
+      <p>O ciclo que transforma gerenciamento de risco de reação a sinistro em processo de melhoria contínua. É a ferramenta-mãe do curso: quase todas as demais 19 ferramentas entram como suporte de alguma etapa do PDCA.</p>
+    </div>
+
+    <!-- 1. FUNDAMENTOS -->
+    <div class="chapter">
+      <div class="chapter-num">Bloco 01</div>
+      <h3>Fundamentos</h3>
+      <p><strong>Origem.</strong> O ciclo nasceu como "Shewhart Cycle", formulado pelo físico e estatístico Walter A. Shewhart nos laboratórios Bell, na década de 1920, dentro do controle estatístico de processos. Foi Willian Edwards Deming quem o levou ao Japão no pós-guerra, popularizando-o entre engenheiros e gestores japoneses como método de gestão da qualidade — por isso também é chamado de "Ciclo de Deming".</p>
+      <p><strong>Quem desenvolveu.</strong> Walter Shewhart (base estatística) e W. Edwards Deming (disseminação e aplicação gerencial), com adoção maciça pela indústria japonesa via JUSE (Union of Japanese Scientists and Engineers) a partir de 1950.</p>
+      <p><strong>Objetivo.</strong> Estruturar qualquer ciclo de melhoria em quatro etapas lógicas e recorrentes, eliminando a improvisação e criando um processo repetível de aprendizado organizacional.</p>
+      <p><strong>Conceitos fundamentais.</strong></p>
+      <ul>
+        <li><strong>Plan (Planejar):</strong> identificar o problema, levantar dados, definir hipótese de causa e desenhar o plano de ação.</li>
+        <li><strong>Do (Executar):</strong> implementar o plano, preferencialmente em escala piloto controlada.</li>
+        <li><strong>Check (Verificar):</strong> medir os resultados against os indicadores definidos na etapa de planejamento.</li>
+        <li><strong>Act (Agir):</strong> padronizar o que funcionou, corrigir o que não funcionou e reiniciar o ciclo em um novo patamar.</li>
+      </ul>
+      <p><strong>Vantagens.</strong> Simplicidade de aplicação; linguagem universal entre operação, segurança e diretoria; orientação a dados; compatível com qualquer porte de transportadora ou seguradora.</p>
+      <p><strong>Limitações.</strong> Não identifica, sozinho, a causa-raiz de um problema complexo — precisa de ferramentas de apoio (Ishikawa, 5 Porquês, Pareto). Exige disciplina de registro: sem dados confiáveis na etapa Check, o ciclo perde valor e vira formalidade burocrática.</p>
+    </div>
+
+    <!-- 2. APLICAÇÃO EM GRIS -->
+    <div class="chapter">
+      <div class="chapter-num">Bloco 02</div>
+      <h3>Aplicação no Gerenciamento de Riscos</h3>
+      <p>No GRIS, o PDCA não é um evento pontual — é o motor por trás de cada rotina de segurança patrimonial e prevenção de perdas.</p>
+      <table>
+        <tr><th>Frente</th><th>Como o PDCA se aplica</th></tr>
+        <tr><td>Identificação de riscos</td><td>Plan: mapeamento de rotas, pontos críticos e modais, cruzando histórico de sinistros com dados de inteligência (nstech, SSP, boletins setoriais).</td></tr>
+        <tr><td>Análise de vulnerabilidades</td><td>Check cíclico: reavaliação periódica de pontos de parada, pátios, CDs e postos de fronteira.</td></tr>
+        <tr><td>Investigação de sinistros</td><td>Act: cada sinistro fechado gera uma ação corretiva formal, não apenas um relatório de ocorrência.</td></tr>
+        <tr><td>Auditorias de campo</td><td>O check-list de auditoria é, na prática, a etapa Check aplicada em campo, com periodicidade definida no Plan.</td></tr>
+        <tr><td>Avaliação de transportadoras</td><td>Homologação (Plan/Do) seguida de reavaliação periódica (Check) e descredenciamento ou plano de adequação (Act).</td></tr>
+        <tr><td>Gestão de prestadores (escolta, rastreamento)</td><td>Revisão cíclica de SLA e desempenho contratual, com ações de ajuste ou substituição.</td></tr>
+        <tr><td>Plano de Gerenciamento de Risco (PGR)</td><td>O PGR bem estruturado é, por natureza, um PDCA documentado: diagnóstico, medidas de controle, verificação de eficácia, revisão.</td></tr>
+        <tr><td>Programas de prevenção</td><td>Campanhas de conscientização e treinamento seguem o ciclo: piloto, medição de adesão, ajuste, escala.</td></tr>
+        <tr><td>Controle operacional</td><td>KPIs de GRIS (sinistralidade, tempo de resposta, aderência a rota) revisados em reuniões cíclicas de gestão.</td></tr>
+        <tr><td>Redução de perdas</td><td>Cada ciclo fechado reduz a variabilidade do processo e, consequentemente, a exposição ao risco.</td></tr>
+      </table>
+    </div>
+
+    <!-- 3. APLICAÇÃO EM SEGURO DE TRANSPORTES -->
+    <div class="chapter">
+      <div class="chapter-num">Bloco 03</div>
+      <h3>Aplicação no Seguro de Transportes</h3>
+      <ul>
+        <li><strong>Corretores:</strong> usam o PDCA para acompanhar a sinistralidade da carteira cliente a cliente, antecipando renovações difíceis e propondo ajustes de risco antes da seguradora precisar agir.</li>
+        <li><strong>Seguradoras:</strong> aplicam o ciclo na revisão de produtos, condições contratuais e franquias, com base em dados de sinistralidade agregada por rota, carga e transportadora.</li>
+        <li><strong>Reguladores (SUSEP):</strong> o próprio modelo de supervisão baseada em risco tem lógica cíclica de diagnóstico, ação e reavaliação.</li>
+        <li><strong>Peritos:</strong> a metodologia de perícia — vistoria, laudo, parecer, follow-up — reproduz Plan/Do/Check/Act na apuração de causa e nexo.</li>
+        <li><strong>Gerentes de sinistro:</strong> tratam cada caso dentro de um ciclo formal (abertura, regulação, decisão, encerramento com lição aprendida), evitando que o mesmo padrão de perda se repita sem intervenção.</li>
+        <li><strong>Subscritores (underwriters):</strong> reprecificam e ajustam condições de apólice a partir da leitura periódica (Check) da performance de risco do segurado, fechando o ciclo com nova condição contratual (Act).</li>
+      </ul>
+    </div>
+
+    <!-- 4. ESTUDO DE CASO -->
+    <div class="chapter">
+      <div class="chapter-num">Bloco 04</div>
+      <h3>Estudo de Caso</h3>
+      <div class="case-box">
+        <h4>Cenário inicial</h4>
+        <p>Transportadora de médio porte opera cargas de eletroeletrônicos entre São Paulo e o Nordeste, com trecho crítico na BR-116 (divisa MG/BA). Nos últimos seis meses, os roubos de carga nesse trecho triplicaram.</p>
+        <h4>Problemas encontrados</h4>
+        <ul>
+          <li>Ausência de rastreamento satelital com bloqueio remoto em parte da frota agregada.</li>
+          <li>Escolta contratada apenas para cargas acima de determinado valor, deixando lacuna em cargas médias.</li>
+          <li>Motoristas sem treinamento formal de conduta em abordagem.</li>
+          <li>Nenhum ponto de parada homologado no trecho crítico.</li>
+        </ul>
+        <h4>Aplicação do PDCA</h4>
+        <p><strong>Plan:</strong> comitê de GRIS mapeia o trecho, cruza dados de sinistro com boletins de roubo de carga da região e define meta de redução de 40% em 90 dias.<br>
+        <strong>Do:</strong> implantação de rastreamento com bloqueio em 100% da frota no trecho, ampliação da escolta para todas as cargas acima de um novo limiar, treinamento obrigatório de condutores e homologação de três pontos de parada seguros.<br>
+        <strong>Check:</strong> acompanhamento semanal de indicadores por 90 dias, com reuniões quinzenais do comitê.<br>
+        <strong>Act:</strong> medidas eficazes padronizadas em procedimento operacional; ponto de parada com menor adesão é substituído; ciclo reinicia com nova meta.</p>
+        <h4>Resultados obtidos</h4>
+        <p>Redução de sinistros no trecho, recuperação da confiança do embarcador e reposicionamento da transportadora perante a seguradora na renovação da apólice de RCTR-C.</p>
+      </div>
+      <div class="before-after">
+        <div class="before">
+          <div class="ba-label">Antes</div>
+          <div class="stat">4 ocorrências / 90 dias</div>
+          <div class="stat-lbl">Roubo de carga no trecho crítico</div>
+        </div>
+        <div class="after">
+          <div class="ba-label">Depois</div>
+          <div class="stat">1 ocorrência / 90 dias</div>
+          <div class="stat-lbl">Após primeiro ciclo PDCA completo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. PASSO A PASSO -->
+    <div class="chapter">
+      <div class="chapter-num">Bloco 05</div>
+      <h3>Passo a Passo</h3>
+      <div class="step"><div class="step-num">01</div><div><h4>Preparação</h4><p>Formar comitê multidisciplinar (GRIS, operação, jurídico, seguros) e definir o escopo exato do problema a ser atacado — um trecho, um cliente, um tipo de carga.</p></div></div>
+      <div class="step"><div class="step-num">02</div><div><h4>Coleta de dados</h4><p>Levantar histórico de sinistros, boletins de ocorrência, dados de rastreamento e informações de inteligência de mercado dos últimos 6 a 12 meses.</p></div></div>
+      <div class="step"><div class="step-num">03</div><div><h4>Análise</h4><p>Usar ferramentas de apoio (Ishikawa para causas, Pareto para priorização) antes de fechar o plano de ação — o PDCA organiza o ciclo, não substitui a análise de causa.</p></div></div>
+      <div class="step"><div class="step-num">04</div><div><h4>Implementação</h4><p>Executar o plano com cronograma, responsáveis nomeados e prazo definido — idealmente em piloto controlado antes de escalar.</p></div></div>
+      <div class="step"><div class="step-num">05</div><div><h4>Acompanhamento</h4><p>Medir os indicadores definidos no Plan em intervalos fixos, sem alterar a meta no meio do ciclo.</p></div></div>
+      <div class="step"><div class="step-num">06</div><div><h4>Indicadores e fechamento</h4><p>Consolidar resultado, decidir o que padronizar, o que descartar e qual será o próximo ciclo.</p></div></div>
+    </div>
+
+    <!-- 6. ERROS FREQUENTES -->
+    <div class="chapter">
+      <div class="chapter-num">Bloco 06</div>
+      <h3>Erros Frequentes</h3>
+      <ul>
+        <li><strong>Pular a etapa Check:</strong> implementar a ação e nunca medir se funcionou — o ciclo vira uma lista de boas intenções.</li>
+        <li><strong>Tratar como evento único:</strong> aplicar o PDCA uma vez e considerar o problema resolvido, sem reiniciar o ciclo em novo patamar.</li>
+        <li><strong>Falta de dono do processo:</strong> plano de ação sem responsável nomeado não sai do papel.</li>
+        <li><strong>Dados não confiáveis:</strong> basear o Check em percepção, não em indicador mensurável.</li>
+        <li><strong>Confundir PDCA com plano de ação isolado:</strong> o PDCA é um ciclo contínuo, não um documento único arquivado após a execução.</li>
+      </ul>
+    </div>
+
+    <!-- 7. INTEGRAÇÃO -->
+    <div class="chapter">
+      <div class="chapter-num">Bloco 07</div>
+      <h3>Integração</h3>
+      <div class="integration-grid">
+        <div class="icard"><span class="norm">ISO 9001</span><p>O PDCA é a espinha dorsal do Sistema de Gestão da Qualidade — presente explicitamente na estrutura da norma.</p></div>
+        <div class="icard"><span class="norm">ISO 31000</span><p>O processo de gestão de riscos da norma (identificar, analisar, tratar, monitorar) é um PDCA aplicado a risco.</p></div>
+        <div class="icard"><span class="norm">ISO 39001</span><p>Segurança viária: o ciclo estrutura metas de redução de sinistros de trânsito em frota própria e agregada.</p></div>
+        <div class="icard"><span class="norm">Gestão por processos</span><p>PDCA é o motor de melhoria de qualquer processo mapeado via fluxograma ou SIPOC.</p></div>
+        <div class="icard"><span class="norm">Compliance</span><p>Auditorias cíclicas de conformidade seguem a mesma lógica de verificação e ação corretiva.</p></div>
+        <div class="icard"><span class="norm">ESG</span><p>Metas de segurança e redução de impacto social/ambiental (acidentes, emissões) evoluem em ciclos PDCA.</p></div>
+      </div>
+    </div>
+
+    <!-- 8. INDICADORES -->
+    <div class="chapter">
+      <div class="chapter-num">Bloco 08</div>
+      <h3>Indicadores</h3>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-name">Taxa de sinistralidade</div><div class="kpi-desc">Nº de sinistros / total de viagens no período</div></div>
+        <div class="kpi-card"><div class="kpi-name">Custo médio por sinistro</div><div class="kpi-desc">Valor total de perdas / nº de ocorrências</div></div>
+        <div class="kpi-card"><div class="kpi-name">Tempo médio de resposta</div><div class="kpi-desc">Da ocorrência ao acionamento de escolta/seguradora</div></div>
+        <div class="kpi-card"><div class="kpi-name">% de rotas com PGR ativo</div><div class="kpi-desc">Cobertura do plano de gerenciamento de risco na malha</div></div>
+        <div class="kpi-card"><div class="kpi-name">Auditorias realizadas x planejadas</div><div class="kpi-desc">Aderência ao cronograma de verificação (Check)</div></div>
+        <div class="kpi-card"><div class="kpi-name">Índice de recorrência</div><div class="kpi-desc">% de sinistros com causa já identificada em ciclo anterior</div></div>
+      </div>
+    </div>
+
+    <!-- 9. CHECKLISTS -->
+    <div class="chapter">
+      <div class="chapter-num">Bloco 09</div>
+      <h3>Checklists</h3>
+      <p><strong>Plan</strong></p>
+      <ul class="checklist">
+        <li>Problema descrito com dados, não com impressão</li>
+        <li>Meta numérica e prazo definidos</li>
+        <li>Comitê e responsáveis nomeados</li>
+      </ul>
+      <p><strong>Do</strong></p>
+      <ul class="checklist">
+        <li>Ação testada em piloto antes de escalar, quando aplicável</li>
+        <li>Cronograma comunicado a todos os envolvidos</li>
+      </ul>
+      <p><strong>Check</strong></p>
+      <ul class="checklist">
+        <li>Indicador medido na mesma métrica definida no Plan</li>
+        <li>Comparação feita contra a linha de base, não contra a meta apenas</li>
+      </ul>
+      <p><strong>Act</strong></p>
+      <ul class="checklist">
+        <li>Decisão registrada: padronizar, ajustar ou descartar</li>
+        <li>Próximo ciclo já com nova meta definida</li>
+      </ul>
+    </div>
+
+    <!-- 10. MODELOS -->
+    <div class="chapter">
+      <div class="chapter-num">Bloco 10</div>
+      <h3>Modelos</h3>
+      <p>Estrutura de referência para o plano de ação PDCA, adaptável em planilha ou formulário de auditoria de campo:</p>
+      <table>
+        <tr><th>Etapa</th><th>Pergunta-chave</th><th>Evidência a registrar</th></tr>
+        <tr><td>Plan</td><td>Qual é o problema e qual a meta?</td><td>Dados históricos + meta numérica</td></tr>
+        <tr><td>Do</td><td>O que foi feito, por quem e quando?</td><td>Cronograma + responsáveis</td></tr>
+        <tr><td>Check</td><td>O indicador se moveu como esperado?</td><td>Série de medições no período</td></tr>
+        <tr><td>Act</td><td>O que vira padrão e o que muda no próximo ciclo?</td><td>Procedimento atualizado / nova meta</td></tr>
+      </table>
+      <p>Fluxo sugerido para uso em auditoria de campo: formulário de coleta (Folha de Verificação) → consolidação em planilha de indicadores → apresentação em comitê mensal de GRIS → registro da decisão de Act.</p>
+    </div>
+
+    <!-- 11. BENEFÍCIOS -->
+    <div class="chapter">
+      <div class="chapter-num">Bloco 11</div>
+      <h3>Benefícios</h3>
+      <table>
+        <tr><th>Público</th><th>Ganho direto</th></tr>
+        <tr><td>Transportadoras</td><td>Redução de perdas operacionais e melhor posição na renovação de apólices</td></tr>
+        <tr><td>Seguradoras</td><td>Melhoria de loss ratio na carteira e menor volatilidade de sinistralidade</td></tr>
+        <tr><td>Corretores</td><td>Portfólio de clientes mais saudável e argumento técnico em renovação</td></tr>
+        <tr><td>Embarcadores</td><td>Maior confiabilidade de entrega e menor exposição contratual</td></tr>
+        <tr><td>Clientes finais</td><td>Menor ruptura de estoque e maior previsibilidade de recebimento</td></tr>
+      </table>
+    </div>
+
+    <!-- 12. REFLEXÃO ESTRATÉGICA -->
+    <div class="chapter">
+      <div class="chapter-num">Bloco 12</div>
+      <h3>Reflexão Estratégica</h3>
+      <div class="reflexao">
+        <p>"Um gestor de risco operacional apaga incêndio. Um gestor de risco estratégico constrói o ciclo que impede o próximo incêndio de acontecer — e prova isso com indicador, não com relato."</p>
+        <p>O PDCA é o que separa GRIS reativo de GRIS que senta na mesa de decisão executiva: quando cada sinistro vira dado de entrada para um ciclo de melhoria, e não apenas um número em relatório mensal, a área deixa de justificar custo e passa a demonstrar retorno.</p>
+      </div>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="chapter" id="quiz-pdca">
+      <div class="chapter-num">Fixação</div>
+      <h3>Quiz — Módulo 1: PDCA</h3>
+      <p>10 perguntas de nível básico para checar o entendimento do módulo. Responda todas e clique em <strong>Corrigir</strong> ao final — o gabarito só aparece depois do envio.</p>
+
+      <form class="quiz-form">
+
+        <div class="quiz-q" data-correct="b">
+          <p class="quiz-enunciado"><strong>1.</strong> Quem formulou originalmente o ciclo hoje conhecido como PDCA?</p>
+          <label class="quiz-opt"><input type="radio" name="q1" value="a"> a) Kaoru Ishikawa</label>
+          <label class="quiz-opt"><input type="radio" name="q1" value="b"> b) Walter A. Shewhart</label>
+          <label class="quiz-opt"><input type="radio" name="q1" value="c"> c) Joseph Juran</label>
+          <label class="quiz-opt"><input type="radio" name="q1" value="d"> d) Taiichi Ohno</label>
+        </div>
+
+        <div class="quiz-q" data-correct="c">
+          <p class="quiz-enunciado"><strong>2.</strong> Quem foi o responsável por disseminar o PDCA no Japão no pós-guerra?</p>
+          <label class="quiz-opt"><input type="radio" name="q2" value="a"> a) Philip Crosby</label>
+          <label class="quiz-opt"><input type="radio" name="q2" value="b"> b) Shigeo Shingo</label>
+          <label class="quiz-opt"><input type="radio" name="q2" value="c"> c) W. Edwards Deming</label>
+          <label class="quiz-opt"><input type="radio" name="q2" value="d"> d) Genichi Taguchi</label>
+        </div>
+
+        <div class="quiz-q" data-correct="d">
+          <p class="quiz-enunciado"><strong>3.</strong> O que a sigla PDCA significa?</p>
+          <label class="quiz-opt"><input type="radio" name="q3" value="a"> a) Process, Data, Control, Audit</label>
+          <label class="quiz-opt"><input type="radio" name="q3" value="b"> b) Plan, Design, Check, Adjust</label>
+          <label class="quiz-opt"><input type="radio" name="q3" value="c"> c) Prevent, Do, Control, Act</label>
+          <label class="quiz-opt"><input type="radio" name="q3" value="d"> d) Plan, Do, Check, Act</label>
+        </div>
+
+        <div class="quiz-q" data-correct="a">
+          <p class="quiz-enunciado"><strong>4.</strong> Na etapa <em>Plan</em>, o que deve ser definido além do problema?</p>
+          <label class="quiz-opt"><input type="radio" name="q4" value="a"> a) Meta numérica e prazo</label>
+          <label class="quiz-opt"><input type="radio" name="q4" value="b"> b) O relatório final do sinistro</label>
+          <label class="quiz-opt"><input type="radio" name="q4" value="c"> c) A apólice de seguro do cliente</label>
+          <label class="quiz-opt"><input type="radio" name="q4" value="d"> d) O organograma da empresa</label>
+        </div>
+
+        <div class="quiz-q" data-correct="b">
+          <p class="quiz-enunciado"><strong>5.</strong> No estudo de caso do módulo, qual foi uma das ações implementadas na etapa <em>Do</em>?</p>
+          <label class="quiz-opt"><input type="radio" name="q5" value="a"> a) Cancelamento da apólice</label>
+          <label class="quiz-opt"><input type="radio" name="q5" value="b"> b) Ampliação da escolta e rastreamento com bloqueio em 100% da frota</label>
+          <label class="quiz-opt"><input type="radio" name="q5" value="c"> c) Suspensão das entregas no trecho</label>
+          <label class="quiz-opt"><input type="radio" name="q5" value="d"> d) Troca de transportadora</label>
+        </div>
+
+        <div class="quiz-q" data-correct="c">
+          <p class="quiz-enunciado"><strong>6.</strong> Qual é o erro mais citado no módulo em relação ao PDCA?</p>
+          <label class="quiz-opt"><input type="radio" name="q6" value="a"> a) Definir meta numérica</label>
+          <label class="quiz-opt"><input type="radio" name="q6" value="b"> b) Nomear responsável pelo plano</label>
+          <label class="quiz-opt"><input type="radio" name="q6" value="c"> c) Pular a etapa Check</label>
+          <label class="quiz-opt"><input type="radio" name="q6" value="d"> d) Usar dados históricos de sinistro</label>
+        </div>
+
+        <div class="quiz-q" data-correct="d">
+          <p class="quiz-enunciado"><strong>7.</strong> Qual norma tem o PDCA como espinha dorsal do sistema de gestão?</p>
+          <label class="quiz-opt"><input type="radio" name="q7" value="a"> a) ISO 39001</label>
+          <label class="quiz-opt"><input type="radio" name="q7" value="b"> b) ISO 31000</label>
+          <label class="quiz-opt"><input type="radio" name="q7" value="c"> c) ISO 45001</label>
+          <label class="quiz-opt"><input type="radio" name="q7" value="d"> d) ISO 9001</label>
+        </div>
+
+        <div class="quiz-q" data-correct="a">
+          <p class="quiz-enunciado"><strong>8.</strong> Na etapa <em>Act</em>, o que deve ser feito com uma ação que se mostrou eficaz?</p>
+          <label class="quiz-opt"><input type="radio" name="q8" value="a"> a) Padronizar e manter no processo</label>
+          <label class="quiz-opt"><input type="radio" name="q8" value="b"> b) Descartar imediatamente</label>
+          <label class="quiz-opt"><input type="radio" name="q8" value="c"> c) Aguardar novo sinistro para decidir</label>
+          <label class="quiz-opt"><input type="radio" name="q8" value="d"> d) Transferir a decisão à seguradora</label>
+        </div>
+
+        <div class="quiz-q" data-correct="b">
+          <p class="quiz-enunciado"><strong>9.</strong> Por que o PDCA sozinho não resolve causas complexas de sinistro?</p>
+          <label class="quiz-opt"><input type="radio" name="q9" value="a"> a) Porque é uma ferramenta exclusiva de seguradoras</label>
+          <label class="quiz-opt"><input type="radio" name="q9" value="b"> b) Porque precisa de ferramentas de apoio, como Ishikawa e 5 Porquês, para achar a causa-raiz</label>
+          <label class="quiz-opt"><input type="radio" name="q9" value="c"> c) Porque não pode ser usado em auditoria de campo</label>
+          <label class="quiz-opt"><input type="radio" name="q9" value="d"> d) Porque não se aplica a operações de e-commerce</label>
+        </div>
+
+        <div class="quiz-q" data-correct="c">
+          <p class="quiz-enunciado"><strong>10.</strong> Segundo a reflexão estratégica do módulo, o que diferencia um gestor de risco estratégico de um operacional?</p>
+          <label class="quiz-opt"><input type="radio" name="q10" value="a"> a) O tamanho da equipe que lidera</label>
+          <label class="quiz-opt"><input type="radio" name="q10" value="b"> b) O valor do prêmio de seguro negociado</label>
+          <label class="quiz-opt"><input type="radio" name="q10" value="c"> c) Construir o ciclo que evita o próximo incidente, provando isso com indicador</label>
+          <label class="quiz-opt"><input type="radio" name="q10" value="d"> d) A quantidade de sinistros abertos por mês</label>
+        </div>
+
+        <button type="button" class="quiz-btn quiz-submit-btn">Corrigir</button>
+      </form>
+
+      <div class="quiz-result" style="display:none;">
+        <div class="quiz-score-label">Resultado</div>
+        <div class="quiz-score quiz-score-text"></div>
+      </div>
+    </div>
+
+    <!-- ======================= MÓDULO 2 — ISHIKAWA ======================= -->
+    <div class="module" id="modulo-2" style="border-top:2px solid var(--dourado);padding-top:44px;margin-top:60px;">
+      <div class="module-head">
+        <div class="eyebrow">Módulo 02 / 20</div>
+        <h2>Diagrama de Ishikawa — Causa e Efeito</h2>
+        <p>A ferramenta que organiza a pergunta mais importante de qualquer investigação de sinistro: por que isso aconteceu, de fato — e não apenas o que aconteceu. É o principal instrumento de apoio ao PDCA na etapa Plan.</p>
+      </div>
+
+      <!-- 1. FUNDAMENTOS -->
+      <div class="chapter">
+        <div class="chapter-num">Bloco 01</div>
+        <h3>Fundamentos</h3>
+        <p><strong>Origem.</strong> Criado no Japão em 1943, dentro dos programas de controle de qualidade da indústria naval e siderúrgica. Também é conhecido como Diagrama de Causa e Efeito ou Diagrama Espinha de Peixe, pela forma visual que assume.</p>
+        <p><strong>Quem desenvolveu.</strong> Kaoru Ishikawa, engenheiro químico japonês, discípulo de Deming e Juran, um dos pais do movimento da qualidade no Japão e criador também dos Círculos de Controle da Qualidade.</p>
+        <p><strong>Objetivo.</strong> Organizar visualmente as possíveis causas de um problema (o "efeito"), agrupadas em categorias, evitando que a investigação pare na primeira causa aparente.</p>
+        <p><strong>Conceitos fundamentais.</strong></p>
+        <ul>
+          <li><strong>Efeito:</strong> o problema central, escrito na "cabeça do peixe" — no GRIS, tipicamente um sinistro, uma não conformidade ou um indicador fora da meta.</li>
+          <li><strong>Categorias (espinhas principais):</strong> tradicionalmente os 6M — Método, Mão de obra, Máquina, Material, Meio ambiente e Medição. No TRC, adaptam-se para Rota, Motorista, Veículo, Carga, Processo e Terceiros/Prestadores.</li>
+          <li><strong>Causas secundárias:</strong> ramificações dentro de cada categoria, aprofundando até a causa-raiz plausível.</li>
+        </ul>
+        <p><strong>Vantagens.</strong> Visual, fácil de conduzir em comitê, evita conclusão precipitada e força olhar multidimensional para o problema.</p>
+        <p><strong>Limitações.</strong> Não prioriza causas por peso ou frequência — para isso, precisa do Pareto. Depende da qualidade do brainstorming: equipe pouco diversa gera diagrama raso.</p>
+      </div>
+
+      <!-- 2. APLICAÇÃO EM GRIS -->
+      <div class="chapter">
+        <div class="chapter-num">Bloco 02</div>
+        <h3>Aplicação no Gerenciamento de Riscos</h3>
+        <p>No GRIS, o Ishikawa é a ferramenta que impede a investigação de sinistro de parar em "o motorista errou" ou "a rota é perigosa" — respostas superficiais que não geram ação corretiva eficaz.</p>
+        <table>
+          <tr><th>Frente</th><th>Como o Ishikawa se aplica</th></tr>
+          <tr><td>Identificação de riscos</td><td>Estrutura o levantamento de causas potenciais antes mesmo de um sinistro ocorrer, em análise preventiva de rota.</td></tr>
+          <tr><td>Análise de vulnerabilidades</td><td>Cada categoria (rota, veículo, motorista, carga) vira uma frente de checagem estruturada.</td></tr>
+          <tr><td>Investigação de sinistros</td><td>Uso central: reconstrução de causa-raiz logo após o registro da ocorrência, em reunião de comitê.</td></tr>
+          <tr><td>Auditorias de campo</td><td>Ponto de partida para desenhar o roteiro de perguntas da auditoria, categoria por categoria.</td></tr>
+          <tr><td>Avaliação de transportadoras</td><td>Mapeia causas de não conformidade recorrente antes de uma decisão de descredenciamento.</td></tr>
+          <tr><td>Gestão de prestadores</td><td>Identifica se a falha de escolta/rastreamento é de processo, de equipamento ou de pessoa.</td></tr>
+          <tr><td>Plano de Gerenciamento de Risco (PGR)</td><td>Alimenta o diagnóstico inicial do PGR com causas organizadas por categoria.</td></tr>
+          <tr><td>Programas de prevenção</td><td>Direciona o conteúdo do treinamento para a categoria de causa mais recorrente.</td></tr>
+          <tr><td>Controle operacional</td><td>Explica desvios de indicador antes de qualquer ação corretiva ser definida.</td></tr>
+          <tr><td>Redução de perdas</td><td>Ação corretiva certeira reduz recorrência — atacar sintoma, não causa, é o principal gerador de sinistro repetido.</td></tr>
+        </table>
+      </div>
+
+      <!-- 3. APLICAÇÃO EM SEGURO DE TRANSPORTES -->
+      <div class="chapter">
+        <div class="chapter-num">Bloco 03</div>
+        <h3>Aplicação no Seguro de Transportes</h3>
+        <ul>
+          <li><strong>Corretores:</strong> usam o diagrama para explicar ao cliente, de forma didática, por que a sinistralidade subiu — argumento mais forte que "o mercado está pior".</li>
+          <li><strong>Seguradoras:</strong> aplicam na análise de carteiras com sinistralidade concentrada, identificando se a causa é de perfil de risco, de subscrição ou de operação do segurado.</li>
+          <li><strong>Reguladores:</strong> usam lógica similar em apuração de causas sistêmicas de reclamação e negativa de sinistro.</li>
+          <li><strong>Peritos:</strong> o laudo pericial, na prática, é um Ishikawa formalizado — categoriza hipóteses e as testa uma a uma até isolar a causa provável.</li>
+          <li><strong>Gerentes de sinistro:</strong> usam para justificar tecnicamente decisões de regulação, sobretudo em casos de recusa por agravamento de risco não informado.</li>
+          <li><strong>Subscritores:</strong> usam o diagrama para decidir se a resposta ao risco é preço, exigência de controle adicional ou recusa de renovação.</li>
+        </ul>
+      </div>
+
+      <!-- 4. ESTUDO DE CASO -->
+      <div class="chapter">
+        <div class="chapter-num">Bloco 04</div>
+        <h3>Estudo de Caso</h3>
+        <div class="case-box">
+          <h4>Cenário inicial</h4>
+          <p>Operador logístico registra quatro avarias de carga refrigerada no mesmo mês, todas atribuídas inicialmente a "falha do motorista" no relatório padrão de ocorrência.</p>
+          <h4>Problemas encontrados</h4>
+          <p>A explicação genérica impedia qualquer ação corretiva eficaz — o índice de avaria continuava subindo mês a mês.</p>
+          <h4>Aplicação do Ishikawa</h4>
+          <p>Comitê de GRIS reconstrói o diagrama com o efeito "avaria de carga refrigerada" e categorias Método, Máquina, Mão de obra, Material, Medição e Meio ambiente. O levantamento revela: (Máquina) manutenção preventiva do baú frigorífico atrasada em três veículos; (Método) ausência de checklist de temperatura no carregamento; (Mão de obra) motoristas sem treinamento específico de cadeia fria — mas essa era apenas uma entre quatro causas, não a única.</p>
+          <h4>Resultados obtidos</h4>
+          <p>Plano de ação passa a atacar manutenção e checklist de carregamento, não apenas o motorista — a causa de maior peso, segundo o Pareto aplicado em seguida, era a manutenção atrasada.</p>
+        </div>
+        <div class="before-after">
+          <div class="before">
+            <div class="ba-label">Antes</div>
+            <div class="stat">1 causa investigada</div>
+            <div class="stat-lbl">"Falha do motorista" em todos os relatórios</div>
+          </div>
+          <div class="after">
+            <div class="ba-label">Depois</div>
+            <div class="stat">4 categorias mapeadas</div>
+            <div class="stat-lbl">Causa-raiz real identificada: manutenção preventiva</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. PASSO A PASSO -->
+      <div class="chapter">
+        <div class="chapter-num">Bloco 05</div>
+        <h3>Passo a Passo</h3>
+        <div class="step"><div class="step-num">01</div><div><h4>Preparação</h4><p>Definir o efeito com precisão — um problema específico, não uma categoria genérica como "roubo de carga em geral".</p></div></div>
+        <div class="step"><div class="step-num">02</div><div><h4>Coleta de dados</h4><p>Reunir a equipe multidisciplinar envolvida no processo, não apenas o GRIS — operação, manutenção, jurídico.</p></div></div>
+        <div class="step"><div class="step-num">03</div><div><h4>Análise</h4><p>Brainstorming estruturado por categoria (adaptação dos 6M para o TRC), sem julgar ou descartar hipóteses nessa fase.</p></div></div>
+        <div class="step"><div class="step-num">04</div><div><h4>Implementação</h4><p>Aplicar 5 Porquês nas causas mais citadas para aprofundar até a causa-raiz plausível.</p></div></div>
+        <div class="step"><div class="step-num">05</div><div><h4>Acompanhamento</h4><p>Cruzar as causas levantadas com o Pareto para saber qual atacar primeiro.</p></div></div>
+        <div class="step"><div class="step-num">06</div><div><h4>Indicadores e fechamento</h4><p>Transformar a causa-raiz priorizada em ação dentro do ciclo PDCA em curso.</p></div></div>
+      </div>
+
+      <!-- 6. ERROS FREQUENTES -->
+      <div class="chapter">
+        <div class="chapter-num">Bloco 06</div>
+        <h3>Erros Frequentes</h3>
+        <ul>
+          <li><strong>Parar na primeira causa levantada:</strong> geralmente é a mais visível, não a mais relevante.</li>
+          <li><strong>Categorias genéricas demais:</strong> usar os 6M sem adaptar ao vocabulário real do TRC reduz a qualidade das respostas do time.</li>
+          <li><strong>Diagrama feito sozinho:</strong> sem a equipe operacional na sala, faltam causas que só quem está no campo enxerga.</li>
+          <li><strong>Confundir causa com sintoma:</strong> "motorista errou" é sintoma; a causa está em treinamento, processo ou condição do veículo.</li>
+          <li><strong>Não conectar com o Pareto:</strong> levantar dez causas e atacar todas ao mesmo tempo dilui o esforço e o orçamento.</li>
+        </ul>
+      </div>
+
+      <!-- 7. INTEGRAÇÃO -->
+      <div class="chapter">
+        <div class="chapter-num">Bloco 07</div>
+        <h3>Integração</h3>
+        <div class="integration-grid">
+          <div class="icard"><span class="norm">ISO 9001</span><p>Análise de causa-raiz é requisito explícito para ação corretiva eficaz.</p></div>
+          <div class="icard"><span class="norm">ISO 31000</span><p>Etapa de análise de risco da norma depende de identificação correta de causas e fontes de risco.</p></div>
+          <div class="icard"><span class="norm">ISO 39001</span><p>Investigação de acidentes de trânsito segue lógica de causa-raiz multifatorial.</p></div>
+          <div class="icard"><span class="norm">Gestão por processos</span><p>Causas mapeadas frequentemente apontam falhas no próprio desenho do processo (SIPOC/fluxograma).</p></div>
+          <div class="icard"><span class="norm">Compliance</span><p>Investigações internas usam a mesma lógica categorizada para apurar não conformidades.</p></div>
+          <div class="icard"><span class="norm">ESG</span><p>Causas ligadas a condição de trabalho e fadiga do motorista conectam segurança a governança social.</p></div>
+        </div>
+      </div>
+
+      <!-- 8. INDICADORES -->
+      <div class="chapter">
+        <div class="chapter-num">Bloco 08</div>
+        <h3>Indicadores</h3>
+        <div class="kpi-grid">
+          <div class="kpi-card"><div class="kpi-name">% de sinistros com causa-raiz identificada</div><div class="kpi-desc">Não apenas causa aparente registrada</div></div>
+          <div class="kpi-card"><div class="kpi-name">Recorrência por categoria</div><div class="kpi-desc">Nº de ocorrências repetidas na mesma categoria (Método, Máquina etc.)</div></div>
+          <div class="kpi-card"><div class="kpi-name">Tempo médio de investigação</div><div class="kpi-desc">Da abertura do sinistro à conclusão do diagrama</div></div>
+          <div class="kpi-card"><div class="kpi-name">Ações corretivas por causa-raiz</div><div class="kpi-desc">Nº de ações vinculadas a causa comprovada, não a sintoma</div></div>
+        </div>
+      </div>
+
+      <!-- 9. CHECKLISTS -->
+      <div class="chapter">
+        <div class="chapter-num">Bloco 09</div>
+        <h3>Checklists</h3>
+        <p><strong>Antes da sessão</strong></p>
+        <ul class="checklist">
+          <li>Efeito definido de forma específica e mensurável</li>
+          <li>Equipe multidisciplinar convocada</li>
+        </ul>
+        <p><strong>Durante a sessão</strong></p>
+        <ul class="checklist">
+          <li>Categorias adaptadas ao vocabulário do TRC</li>
+          <li>Nenhuma hipótese descartada na fase de levantamento</li>
+        </ul>
+        <p><strong>Depois da sessão</strong></p>
+        <ul class="checklist">
+          <li>Causas priorizadas por peso (Pareto) antes da ação</li>
+          <li>Causa-raiz registrada formalmente, não apenas o sintoma</li>
+        </ul>
+      </div>
+
+      <!-- 10. MODELOS -->
+      <div class="chapter">
+        <div class="chapter-num">Bloco 10</div>
+        <h3>Modelos</h3>
+        <p>Categorias sugeridas para adaptação do diagrama ao Transporte Rodoviário de Cargas:</p>
+        <table>
+          <tr><th>Categoria (6M adaptado)</th><th>Exemplos de causa no TRC</th></tr>
+          <tr><td>Rota / Meio ambiente</td><td>Trecho crítico, horário de maior incidência, condição de sinalização</td></tr>
+          <tr><td>Motorista / Mão de obra</td><td>Fadiga, treinamento, conduta em abordagem</td></tr>
+          <tr><td>Veículo / Máquina</td><td>Manutenção atrasada, rastreador com falha, baú sem lacre adequado</td></tr>
+          <tr><td>Carga / Material</td><td>Embalagem inadequada, valor agregado alto sem escolta compatível</td></tr>
+          <tr><td>Processo / Método</td><td>Checklist de saída ausente, ausência de ponto de parada homologado</td></tr>
+          <tr><td>Medição</td><td>Indicador mal definido, ausência de registro padronizado de ocorrência</td></tr>
+        </table>
+      </div>
+
+      <!-- 11. BENEFÍCIOS -->
+      <div class="chapter">
+        <div class="chapter-num">Bloco 11</div>
+        <h3>Benefícios</h3>
+        <table>
+          <tr><th>Público</th><th>Ganho direto</th></tr>
+          <tr><td>Transportadoras</td><td>Ação corretiva certeira, sem desperdício de investimento em causa errada</td></tr>
+          <tr><td>Seguradoras</td><td>Melhor leitura técnica do perfil de risco do segurado</td></tr>
+          <tr><td>Corretores</td><td>Argumento técnico consistente em negociação de renovação</td></tr>
+          <tr><td>Embarcadores</td><td>Redução real de recorrência, não apenas resposta pontual</td></tr>
+          <tr><td>Clientes finais</td><td>Menos avaria e atraso repetido no mesmo padrão de causa</td></tr>
+        </table>
+      </div>
+
+      <!-- 12. REFLEXÃO ESTRATÉGICA -->
+      <div class="chapter">
+        <div class="chapter-num">Bloco 12</div>
+        <h3>Reflexão Estratégica</h3>
+        <div class="reflexao">
+          <p>"Quem investiga sinistro perguntando só 'o que aconteceu' produz relatório. Quem pergunta 'por que aconteceu', categoria por categoria, produz prevenção."</p>
+          <p>O Ishikawa é o que transforma a investigação de sinistro de exercício burocrático em inteligência operacional — e é o que dá ao gestor de risco autoridade técnica para discordar do relatório fácil e defender, com estrutura, a causa real diante da diretoria e da seguradora.</p>
+        </div>
+      </div>
+
+      <!-- QUIZ MÓDULO 2 -->
+      <div class="chapter" id="quiz-ishikawa">
+        <div class="chapter-num">Fixação</div>
+        <h3>Quiz — Módulo 2: Diagrama de Ishikawa</h3>
+        <p>10 perguntas de nível básico para checar o entendimento do módulo. Responda todas e clique em <strong>Corrigir</strong> ao final — o gabarito só aparece depois do envio.</p>
+
+        <form class="quiz-form">
+
+          <div class="quiz-q" data-correct="b">
+            <p class="quiz-enunciado"><strong>1.</strong> Quem criou o Diagrama de Ishikawa?</p>
+            <label class="quiz-opt"><input type="radio" name="i1" value="a"> a) Walter Shewhart</label>
+            <label class="quiz-opt"><input type="radio" name="i1" value="b"> b) Kaoru Ishikawa</label>
+            <label class="quiz-opt"><input type="radio" name="i1" value="c"> c) W. Edwards Deming</label>
+            <label class="quiz-opt"><input type="radio" name="i1" value="d"> d) Taiichi Ohno</label>
+          </div>
+
+          <div class="quiz-q" data-correct="c">
+            <p class="quiz-enunciado"><strong>2.</strong> Por qual outro nome o diagrama também é conhecido?</p>
+            <label class="quiz-opt"><input type="radio" name="i2" value="a"> a) Diagrama de Pareto</label>
+            <label class="quiz-opt"><input type="radio" name="i2" value="b"> b) Diagrama de Afinidades</label>
+            <label class="quiz-opt"><input type="radio" name="i2" value="c"> c) Diagrama Espinha de Peixe</label>
+            <label class="quiz-opt"><input type="radio" name="i2" value="d"> d) Diagrama de Dispersão</label>
+          </div>
+
+          <div class="quiz-q" data-correct="a">
+            <p class="quiz-enunciado"><strong>3.</strong> O que é escrito na "cabeça do peixe" no diagrama?</p>
+            <label class="quiz-opt"><input type="radio" name="i3" value="a"> a) O efeito — o problema central a ser investigado</label>
+            <label class="quiz-opt"><input type="radio" name="i3" value="b"> b) O nome do motorista envolvido</label>
+            <label class="quiz-opt"><input type="radio" name="i3" value="c"> c) O valor da apólice</label>
+            <label class="quiz-opt"><input type="radio" name="i3" value="d"> d) A data do sinistro</label>
+          </div>
+
+          <div class="quiz-q" data-correct="d">
+            <p class="quiz-enunciado"><strong>4.</strong> Quais são as categorias tradicionais do Ishikawa, conhecidas como 6M?</p>
+            <label class="quiz-opt"><input type="radio" name="i4" value="a"> a) Meta, Método, Mensagem, Marca, Mercado, Moeda</label>
+            <label class="quiz-opt"><input type="radio" name="i4" value="b"> b) Motorista, Multa, Manutenção, Marca, Meta, Mercado</label>
+            <label class="quiz-opt"><input type="radio" name="i4" value="c"> c) Meio, Modelo, Mercado, Moeda, Marca, Meta</label>
+            <label class="quiz-opt"><input type="radio" name="i4" value="d"> d) Método, Mão de obra, Máquina, Material, Meio ambiente, Medição</label>
+          </div>
+
+          <div class="quiz-q" data-correct="b">
+            <p class="quiz-enunciado"><strong>5.</strong> No estudo de caso do módulo, qual foi a causa de maior peso na avaria de carga refrigerada?</p>
+            <label class="quiz-opt"><input type="radio" name="i5" value="a"> a) Falta de escolta armada</label>
+            <label class="quiz-opt"><input type="radio" name="i5" value="b"> b) Manutenção preventiva atrasada do baú frigorífico</label>
+            <label class="quiz-opt"><input type="radio" name="i5" value="c"> c) Roubo de carga no trecho</label>
+            <label class="quiz-opt"><input type="radio" name="i5" value="d"> d) Ausência de apólice de seguro</label>
+          </div>
+
+          <div class="quiz-q" data-correct="c">
+            <p class="quiz-enunciado"><strong>6.</strong> Qual ferramenta o módulo recomenda usar em conjunto com o Ishikawa para priorizar as causas levantadas?</p>
+            <label class="quiz-opt"><input type="radio" name="i6" value="a"> a) SWOT</label>
+            <label class="quiz-opt"><input type="radio" name="i6" value="b"> b) Bow-Tie Analysis</label>
+            <label class="quiz-opt"><input type="radio" name="i6" value="c"> c) Diagrama de Pareto</label>
+            <label class="quiz-opt"><input type="radio" name="i6" value="d"> d) Benchmarking</label>
+          </div>
+
+          <div class="quiz-q" data-correct="a">
+            <p class="quiz-enunciado"><strong>7.</strong> Qual é o erro mais citado no uso do Ishikawa segundo o módulo?</p>
+            <label class="quiz-opt"><input type="radio" name="i7" value="a"> a) Parar na primeira causa levantada</label>
+            <label class="quiz-opt"><input type="radio" name="i7" value="b"> b) Convocar equipe multidisciplinar</label>
+            <label class="quiz-opt"><input type="radio" name="i7" value="c"> c) Adaptar as categorias ao TRC</label>
+            <label class="quiz-opt"><input type="radio" name="i7" value="d"> d) Registrar a causa-raiz formalmente</label>
+          </div>
+
+          <div class="quiz-q" data-correct="d">
+            <p class="quiz-enunciado"><strong>8.</strong> Segundo o módulo, "motorista errou" é geralmente:</p>
+            <label class="quiz-opt"><input type="radio" name="i8" value="a"> a) A causa-raiz real do problema</label>
+            <label class="quiz-opt"><input type="radio" name="i8" value="b"> b) Uma categoria do diagrama</label>
+            <label class="quiz-opt"><input type="radio" name="i8" value="c"> c) Um indicador de KPI</label>
+            <label class="quiz-opt"><input type="radio" name="i8" value="d"> d) Um sintoma, não a causa real</label>
+          </div>
+
+          <div class="quiz-q" data-correct="b">
+            <p class="quiz-enunciado"><strong>9.</strong> Em qual etapa do PDCA o Ishikawa atua como principal ferramenta de apoio?</p>
+            <label class="quiz-opt"><input type="radio" name="i9" value="a"> a) Do</label>
+            <label class="quiz-opt"><input type="radio" name="i9" value="b"> b) Plan</label>
+            <label class="quiz-opt"><input type="radio" name="i9" value="c"> c) Check</label>
+            <label class="quiz-opt"><input type="radio" name="i9" value="d"> d) Act</label>
+          </div>
+
+          <div class="quiz-q" data-correct="c">
+            <p class="quiz-enunciado"><strong>10.</strong> Por que fazer o diagrama sozinho, sem a equipe operacional, é considerado um erro?</p>
+            <label class="quiz-opt"><input type="radio" name="i10" value="a"> a) Porque a norma ISO exige assinatura coletiva</label>
+            <label class="quiz-opt"><input type="radio" name="i10" value="b"> b) Porque o diagrama só pode ser feito pela diretoria</label>
+            <label class="quiz-opt"><input type="radio" name="i10" value="c"> c) Porque faltam causas que só quem está no campo enxerga</label>
+            <label class="quiz-opt"><input type="radio" name="i10" value="d"> d) Porque aumenta o custo do seguro</label>
+          </div>
+
+          <button type="button" class="quiz-btn quiz-submit-btn">Corrigir</button>
+        </form>
+
+        <div class="quiz-result" style="display:none;">
+          <div class="quiz-score-label">Resultado</div>
+          <div class="quiz-score quiz-score-text"></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <a class="nav-pill" href="../cursos.html">← Voltar ao catálogo de cursos</a>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>GRIS.EXPERT — Conteúdo técnico em Gerenciamento de Riscos, Segurança Patrimonial e Prevenção de Perdas.<br>
+    André Araújo · <a href="mailto:andre171170@gmail.com">andre171170@gmail.com</a> · <a href="https://www.linkedin.com/in/andrearaujo-risk" target="_blank" rel="noopener">LinkedIn</a></p>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.quiz-submit-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var wrapper = btn.closest('.chapter');
+    var questions = wrapper.querySelectorAll('.quiz-q');
+    var total = questions.length;
+    var acertos = 0;
+    var naoRespondidas = 0;
+
+    questions.forEach(function(q){
+      var correct = q.getAttribute('data-correct');
+      var checked = q.querySelector('input[type="radio"]:checked');
+      var opts = q.querySelectorAll('.quiz-opt');
+
+      q.classList.remove('correct','incorrect');
+      var oldFb = q.querySelector('.quiz-feedback');
+      if(oldFb) oldFb.remove();
+      opts.forEach(function(o){ o.classList.remove('is-correct','is-wrong-pick'); });
+
+      opts.forEach(function(o){
+        var val = o.querySelector('input').value;
+        if(val === correct) o.classList.add('is-correct');
+      });
+
+      var fb = document.createElement('div');
+      fb.className = 'quiz-feedback';
+
+      if(!checked){
+        naoRespondidas++;
+        fb.classList.add('no');
+        fb.textContent = 'Não respondida — resposta correta marcada acima';
+        q.classList.add('incorrect');
+      } else if(checked.value === correct){
+        acertos++;
+        fb.classList.add('ok');
+        fb.textContent = 'Correto';
+        q.classList.add('correct');
+      } else {
+        fb.classList.add('no');
+        fb.textContent = 'Incorreto — resposta correta marcada acima';
+        q.classList.add('incorrect');
+        checked.closest('.quiz-opt').classList.add('is-wrong-pick');
+      }
+      q.appendChild(fb);
+    });
+
+    var resultBox = wrapper.querySelector('.quiz-result');
+    var scoreText = wrapper.querySelector('.quiz-score-text');
+    scoreText.textContent = acertos + ' de ' + total + ' corretas' + (naoRespondidas > 0 ? ' (' + naoRespondidas + ' não respondida' + (naoRespondidas>1?'s':'') + ')' : '');
+    resultBox.style.display = 'block';
+    resultBox.scrollIntoView({behavior:'smooth', block:'center'});
+  });
+});
+</script>
+
+</body>
+</html>
